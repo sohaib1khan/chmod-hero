@@ -18,7 +18,7 @@ ChmodHero is an interactive web-based game that teaches Linux file permissions (
 
 ## 🚀 Quick Start
 
-### Option 1: Run Locally
+### Option: Run Locally
 
 **Prerequisites:**
 - Python 3.7 or higher
@@ -203,10 +203,3 @@ CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
 **Leaderboard not saving**
 - Check file permissions in the project directory
 - Make sure scores.json can be created/modified
-
-
-## 🎮 Try It Now
-
-**[Play ChmodHero Online](https://sohaib1khan.github.io/chmod-hero/)**
-
-No installation required - start learning chmod through real DevOps scenarios!
