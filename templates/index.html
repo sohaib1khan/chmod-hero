@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-white text-center py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    <i class="fas fa-terminal"></i> ChmodHero
+                </h1>
+                <p class="lead mb-4">
+                    Master Linux file permissions through real DevOps scenarios! 
+                    Learn chmod commands by solving actual server incidents and deployment challenges.
+                </p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{{ url_for('game') }}" class="btn btn-warning btn-lg px-4">
+                        <i class="fas fa-play"></i> Start Playing
+                    </a>
+                    <a href="{{ url_for('tutorial') }}" class="btn btn-success btn-lg px-4">
+                        <i class="fas fa-graduation-cap"></i> Tutorial
+                    </a>
+                    <a href="{{ url_for('help_page') }}" class="btn btn-info btn-lg px-4">
+                        <i class="fas fa-book"></i> Help & Examples
+                    </a>
+                    <a href="{{ url_for('leaderboard') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-trophy"></i> Leaderboard
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="terminal-demo bg-dark text-success p-4 rounded shadow-lg" style="font-family: 'Courier New', monospace;">
+                    <div class="mb-2">user@server:~$ ls -l deploy.sh</div>
+                    <div class="mb-2">-rw-r--r-- 1 user group 1234 deploy.sh</div>
+                    <div class="mb-2">user@server:~$ <span class="text-warning">chmod +x deploy.sh</span></div>
+                    <div class="mb-2">user@server:~$ ls -l deploy.sh</div>
+                    <div class="text-info">-rwxr-xr-x 1 user group 1234 deploy.sh</div>
+                    <div class="mt-3 text-success">✅ Deploy script is now executable!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold">Why ChmodHero?</h2>
+                <p class="lead text-muted">Learn Linux permissions through hands-on practice with real scenarios</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-server fa-3x text-primary"></i>
+                        </div>
+                        <h5>Real DevOps Scenarios</h5>
+                        <p class="text-muted">
+                            Practice with actual situations you'll encounter: 
+                            SSH key security, deployment scripts, config files, and container builds.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-graduation-cap fa-3x text-success"></i>
+                        </div>
+                        <h5>Learn by Doing</h5>
+                        <p class="text-muted">
+                            No boring theory! Jump straight into solving permission problems 
+                            with immediate feedback and helpful hints.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-trophy fa-3x text-warning"></i>
+                        </div>
+                        <h5>Track Progress</h5>
+                        <p class="text-muted">
+                            Earn points, unlock achievements, and compete on the leaderboard. 
+                            See your improvement over time!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">How It Works</h2>
+                <p class="lead text-muted">Three simple steps to master chmod</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold fs-4">1</span>
+                    </div>
+                    <h5>Read the Scenario</h5>
+                    <p class="text-muted">
+                        Each level presents a real-world DevOps problem that needs solving.
+                        From broken deployment scripts to insecure SSH keys.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="step-number bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold fs-4">2</span>
+                    </div>
+                    <h5>Fix the Permissions</h5>
+                    <p class="text-muted">
+                        Use your chmod knowledge to solve the problem. 
+                        Get instant feedback and hints if you need help.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="step-number bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <span class="fw-bold fs-4">3</span>
+                    </div>
+                    <h5>Level Up!</h5>
+                    <p class="text-muted">
+                        Earn points based on speed and accuracy. 
+                        Progress through increasingly challenging scenarios.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sample Scenarios Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="display-5 fw-bold">Sample Scenarios</h2>
+                <p class="lead text-muted">Get a taste of what you'll be solving</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-danger text-white">
+                        <h6 class="mb-0"><i class="fas fa-exclamation-triangle"></i> SSH Key Security Alert!</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="small">
+                            "Security audit found that SSH private keys have wrong permissions. 
+                            This is a critical security risk!"
+                        </p>
+                        <div class="bg-light p-2 rounded font-monospace small">
+                            -rw-r--r-- id_rsa
+                        </div>
+                        <p class="small mt-2 text-muted">
+                            <strong>Your task:</strong> Secure the SSH private key so only the owner can read/write it
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0"><i class="fas fa-docker"></i> Container Build Failure!</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="small">
+                            "Your Docker build is failing because the build script 
+                            doesn't have the right permissions."
+                        </p>
+                        <div class="bg-light p-2 rounded font-monospace small">
+                            -rw-rw-rw- build.sh<br>
+                            -rw-rw-rw- test.sh
+                        </div>
+                        <p class="small mt-2 text-muted">
+                            <strong>Your task:</strong> Make scripts executable while keeping them secure
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0"><i class="fas fa-database"></i> Database Backup Emergency!</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="small">
+                            "The automated backup script failed because it can't access 
+                            the database dump file."
+                        </p>
+                        <div class="bg-light p-2 rounded font-monospace small">
+                            -rw------- backup.sql<br>
+                            -rw-r----- backup.sh
+                        </div>
+                        <p class="small mt-2 text-muted">
+                            <strong>Your task:</strong> Fix permissions for backup script and data access
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-4">Ready to Become a Chmod Hero?</h2>
+                <p class="lead mb-4">
+                    Stop struggling with Linux permissions! Learn through practice with real scenarios 
+                    that you'll actually encounter in your DevOps career.
+                </p>
+                <a href="{{ url_for('game') }}" class="btn btn-warning btn-lg px-5">
+                    <i class="fas fa-rocket"></i> Start Your Journey
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Reference -->
+<section class="py-4 bg-dark text-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h6 class="mb-3">Quick Permission Reference</h6>
+                <div class="row">
+                    <div class="col-md-3">
+                        <small><strong>755</strong> - Scripts (rwxr-xr-x)</small>
+                    </div>
+                    <div class="col-md-3">
+                        <small><strong>644</strong> - Config files (rw-r--r--)</small>
+                    </div>
+                    <div class="col-md-3">
+                        <small><strong>600</strong> - Secret files (rw-------)</small>
+                    </div>
+                    <div class="col-md-3">
+                        <small><strong>+x</strong> - Add execute permission</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,114 @@
+/* Additional styles for ChmodHero GitHub Pages */
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Loading animation for buttons */
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Code syntax highlighting */
+.code-block .comment {
+    color: #6b7280;
+}
+
+.code-block .string {
+    color: #10b981;
+}
+
+.code-block .keyword {
+    color: #8b5cf6;
+}
+
+/* Enhanced terminal styling */
+.terminal-demo .command {
+    color: #fbbf24;
+}
+
+.terminal-demo .error {
+    color: #ef4444;
+}
+
+.terminal-demo .success {
+    color: #10b981;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Print styles */
+@media print {
+    .nav, .hero, .footer {
+        display: none;
+    }
+    
+    body {
+        color: #000;
+        background: #fff;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff;
+        --text-secondary: #e2e8f0;
+        --border-color: #64748b;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Focus indicators for accessibility */
+.btn:focus,
+a:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Skip to content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary-gradient);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    z-index: 1001;
+}
+
+.skip-link:focus {
+    top: 6px;
+}

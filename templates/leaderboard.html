@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}ChmodHero - Leaderboard{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">
+            <i class="fas fa-trophy text-warning"></i> Leaderboard
+        </h1>
+        <p class="lead text-muted">Top ChmodHero players from around the world</p>
+    </div>
+
+    <!-- Leaderboard Table -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-gradient-primary text-white text-center py-3">
+                    <h4 class="mb-0"><i class="fas fa-medal"></i> Hall of Fame</h4>
+                </div>
+                <div class="card-body p-0">
+                    {% if scores %}
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col" class="text-center" style="width: 80px;">Rank</th>
+                                    <th scope="col">Player</th>
+                                    <th scope="col" class="text-center">Score</th>
+                                    <th scope="col" class="text-center">Levels</th>
+                                    <th scope="col" class="text-center">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for score in scores %}
+                                <tr class="{% if loop.index <= 3 %}table-warning{% endif %}">
+                                    <td class="text-center">
+                                        {% if loop.index == 1 %}
+                                        <i class="fas fa-crown text-warning fs-4"></i>
+                                        {% elif loop.index == 2 %}
+                                        <i class="fas fa-medal text-secondary fs-5"></i>
+                                        {% elif loop.index == 3 %}
+                                        <i class="fas fa-medal text-warning fs-5"></i>
+                                        {% else %}
+                                        <span class="fw-bold">#{{ loop.index }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-primary text-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                                {{ score.player_name[0].upper() }}
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold">{{ score.player_name }}</div>
+                                                {% if loop.index <= 3 %}
+                                                <small class="text-muted">
+                                                    {% if loop.index == 1 %}Champion{% elif loop.index == 2 %}Runner-up{% else %}Third Place{% endif %}
+                                                </small>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="fw-bold fs-5 text-primary">{{ "{:,}".format(score.score) }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-info">{{ score.levels_completed }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <small class="text-muted">{{ score.date.split(' ')[0] }}</small>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No scores yet!</h5>
+                        <p class="text-muted">Be the first to complete the game and claim the top spot!</p>
+                        <a href="{{ url_for('game') }}" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Start Playing
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    {% if scores %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="text-center mb-4">Game Statistics</h3>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                    <h4 class="fw-bold">{{ scores|length }}</h4>
+                    <p class="text-muted mb-0">Total Players</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-star fa-2x text-warning mb-2"></i>
+                    <h4 class="fw-bold">{{ scores[0].score if scores else 0 }}</h4>
+                    <p class="text-muted mb-0">Highest Score</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-layer-group fa-2x text-success mb-2"></i>
+                    <h4 class="fw-bold">{{ scores[0].levels_completed if scores else 0 }}</h4>
+                    <p class="text-muted mb-0">Max Levels</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-2x text-info mb-2"></i>
+                    <h4 class="fw-bold">{{ ((scores|sum(attribute='score')) / scores|length)|round|int if scores else 0 }}</h4>
+                    <p class="text-muted mb-0">Average Score</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Call to Action -->
+    <div class="text-center mt-5">
+        <div class="card bg-gradient-primary text-white border-0 shadow-lg">
+            <div class="card-body py-4">
+                <h4 class="mb-3">Think you can make it to the top?</h4>
+                <p class="mb-4">Master Linux permissions and show your DevOps skills!</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{{ url_for('game') }}" class="btn btn-warning btn-lg px-4">
+                        <i class="fas fa-gamepad"></i> Play Now
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.avatar {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

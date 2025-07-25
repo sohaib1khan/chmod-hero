@@ -1,0 +1,712 @@
+{% extends "base.html" %}
+
+{% block title %}ChmodHero - Interactive Tutorial{% endblock %}
+
+{% block extra_head %}
+<style>
+    .tutorial-step {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .tutorial-step.active {
+        border: 3px solid #007bff;
+        transform: scale(1.02);
+    }
+    
+    .step-number {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .step-number.completed {
+        background: linear-gradient(45deg, #28a745, #1e7e34);
+    }
+    
+    .practice-terminal {
+        background: #1e1e1e;
+        color: #00ff00;
+        font-family: 'Courier New', monospace;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border: 2px solid #333;
+        min-height: 150px;
+    }
+    
+    .tutorial-command {
+        background: #2d3748;
+        color: #a0aec0;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        border-left: 4px solid #007bff;
+        margin: 10px 0;
+    }
+    
+    .try-it-box {
+        background: #e3f2fd;
+        border: 2px dashed #2196f3;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    
+    .progress-tracker {
+        position: sticky;
+        top: 20px;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .progress-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .progress-item:last-child {
+        border-bottom: none;
+    }
+    
+    .progress-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        background: #f8f9fa;
+        border: 2px solid #dee2e6;
+    }
+    
+    .progress-icon.completed {
+        background: #28a745;
+        border-color: #28a745;
+        color: white;
+    }
+    
+    .progress-icon.current {
+        background: #007bff;
+        border-color: #007bff;
+        color: white;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    
+    .file-simulation {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        font-family: 'Courier New', monospace;
+        margin: 15px 0;
+    }
+    
+    .command-input-tutorial {
+        background: #1e1e1e;
+        color: #00ff00;
+        border: 2px solid #333;
+        font-family: 'Courier New', monospace;
+        font-size: 16px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    .command-input-tutorial:focus {
+        outline: none;
+        border-color: #00ff00;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    }
+    
+    .hint-panel {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+        display: none;
+    }
+    
+    .success-feedback {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        display: none;
+    }
+    
+    .error-feedback {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <!-- Main Tutorial Content -->
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold">
+                    <i class="fas fa-graduation-cap text-primary"></i> Interactive Tutorial
+                </h1>
+                <p class="lead text-muted">Learn chmod step-by-step with hands-on practice</p>
+            </div>
+
+            <!-- Tutorial Steps -->
+            <div id="tutorial-content">
+                <!-- Step 1: Introduction -->
+                <div class="tutorial-step active" id="step-1">
+                    <div class="step-number">1</div>
+                    <h3>Welcome to Chmod Mastery! 🎯</h3>
+                    <p class="lead">Let's start with the basics. File permissions control who can do what with files on your system.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>The Permission Trinity:</h5>
+                            <ul>
+                                <li><strong>Read (r)</strong> - View file contents</li>
+                                <li><strong>Write (w)</strong> - Modify file contents</li>
+                                <li><strong>Execute (x)</strong> - Run the file</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>The User Trio:</h5>
+                            <ul>
+                                <li><strong>Owner (u)</strong> - File creator</li>
+                                <li><strong>Group (g)</strong> - Shared access</li>
+                                <li><strong>Others (o)</strong> - Everyone else</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="file-simulation">
+                        <strong>Example file listing:</strong><br>
+                        -rw-r--r-- 1 user group 1234 myfile.txt<br>
+                        <small class="text-muted">
+                            ↑ Owner: rw- (read+write) | Group: r-- (read) | Others: r-- (read)
+                        </small>
+                    </div>
+                    
+                    <div class="try-it-box">
+                        <p>Ready to learn? Click "Next Step" to continue!</p>
+                        <button class="btn btn-primary" onclick="nextStep()">
+                            <i class="fas fa-arrow-right"></i> Next Step
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Understanding Octal -->
+                <div class="tutorial-step" id="step-2" style="display: none;">
+                    <div class="step-number">2</div>
+                    <h3>Understanding Octal Numbers 🔢</h3>
+                    <p>Octal notation is the most common way to set permissions. Each digit represents one user type.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="text-primary">4</h5>
+                                    <p>Read permission</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="text-success">2</h5>
+                                    <p>Write permission</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="text-warning">1</h5>
+                                    <p>Execute permission</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-command">
+                        <strong>Example:</strong> 755 = 7 (owner) + 5 (group) + 5 (others)<br>
+                        7 = 4+2+1 = rwx (read+write+execute)<br>
+                        5 = 4+0+1 = r-x (read+execute only)
+                    </div>
+                    
+                    <div class="try-it-box">
+                        <h5>Quick Quiz! 🧠</h5>
+                        <p>What does the octal number <strong>644</strong> mean?</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-primary w-100" onclick="checkAnswer(1, false)">
+                                    rwxrwxrwx
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-primary w-100" onclick="checkAnswer(1, true)">
+                                    rw-r--r--
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-outline-primary w-100" onclick="checkAnswer(1, false)">
+                                    rwxr-xr-x
+                                </button>
+                            </div>
+                        </div>
+                        <div id="quiz-1-feedback" class="mt-3"></div>
+                    </div>
+                </div>
+
+                <!-- Step 3: First chmod Command -->
+                <div class="tutorial-step" id="step-3" style="display: none;">
+                    <div class="step-number">3</div>
+                    <h3>Your First chmod Command! 🚀</h3>
+                    <p>Let's practice with a real scenario. You have a script that needs to be executable.</p>
+                    
+                    <div class="file-simulation">
+                        <strong>Current situation:</strong><br>
+                        $ ls -l script.sh<br>
+                        -rw-r--r-- 1 user group 156 script.sh<br>
+                        <br>
+                        $ ./script.sh<br>
+                        <span style="color: red;">bash: ./script.sh: Permission denied</span>
+                    </div>
+                    
+                    <div class="try-it-box">
+                        <h5>Fix it! Make the script executable:</h5>
+                        <p>Type a chmod command to make script.sh executable for everyone:</p>
+                        <div class="practice-terminal">
+                            $ <input type="text" class="command-input-tutorial" id="command-3" 
+                                   placeholder="chmod ??? script.sh" 
+                                   onkeypress="if(event.key==='Enter') checkCommand(3)">
+                        </div>
+                        <button class="btn btn-success" onclick="checkCommand(3)">
+                            <i class="fas fa-play"></i> Execute Command
+                        </button>
+                        <button class="btn btn-info" onclick="showHint(3)">
+                            <i class="fas fa-lightbulb"></i> Need a Hint?
+                        </button>
+                        
+                        <div id="hint-3" class="hint-panel">
+                            <i class="fas fa-lightbulb"></i> <strong>Hint:</strong> 
+                            To make a file executable for everyone, you can use either:
+                            <code>chmod +x filename</code> or <code>chmod 755 filename</code>
+                        </div>
+                        
+                        <div id="success-3" class="success-feedback">
+                            <i class="fas fa-check-circle"></i> Perfect! The script is now executable. 
+                            You can run it with <code>./script.sh</code>
+                        </div>
+                        
+                        <div id="error-3" class="error-feedback">
+                            <i class="fas fa-times-circle"></i> <span id="error-text-3"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Security Scenario -->
+                <div class="tutorial-step" id="step-4" style="display: none;">
+                    <div class="step-number">4</div>
+                    <h3>Security First! 🔐</h3>
+                    <p>Now let's handle a security scenario. SSH private keys must have restricted permissions.</p>
+                    
+                    <div class="file-simulation">
+                        <strong>Security issue:</strong><br>
+                        $ ls -l ~/.ssh/id_rsa<br>
+                        -rw-r--r-- 1 user group 1675 /home/user/.ssh/id_rsa<br>
+                        <br>
+                        $ ssh server<br>
+                        <span style="color: red;">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>
+                        @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @<br>
+                        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@<br>
+                        Permissions 0644 for '/home/user/.ssh/id_rsa' are too open.</span>
+                    </div>
+                    
+                    <div class="try-it-box">
+                        <h5>Secure the SSH key! 🔑</h5>
+                        <p>Make the private key readable and writable by owner only:</p>
+                        <div class="practice-terminal">
+                            $ <input type="text" class="command-input-tutorial" id="command-4" 
+                                   placeholder="chmod ??? ~/.ssh/id_rsa" 
+                                   onkeypress="if(event.key==='Enter') checkCommand(4)">
+                        </div>
+                        <button class="btn btn-success" onclick="checkCommand(4)">
+                            <i class="fas fa-shield-alt"></i> Secure Key
+                        </button>
+                        <button class="btn btn-info" onclick="showHint(4)">
+                            <i class="fas fa-lightbulb"></i> Need a Hint?
+                        </button>
+                        
+                        <div id="hint-4" class="hint-panel">
+                            <i class="fas fa-lightbulb"></i> <strong>Hint:</strong> 
+                            Private keys should only be accessible by the owner. Use <code>chmod 600 filename</code>
+                            (6 = 4+2 = read+write for owner, 0 = no permissions for group and others)
+                        </div>
+                        
+                        <div id="success-4" class="success-feedback">
+                            <i class="fas fa-shield-alt"></i> Excellent! Your SSH key is now secure. 
+                            Only you can read or modify it.
+                        </div>
+                        
+                        <div id="error-4" class="error-feedback">
+                            <i class="fas fa-times-circle"></i> <span id="error-text-4"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Configuration Files -->
+                <div class="tutorial-step" id="step-5" style="display: none;">
+                    <div class="step-number">5</div>
+                    <h3>Configuration Files 📄</h3>
+                    <p>Web servers and applications need to read config files, but they shouldn't be executable.</p>
+                    
+                    <div class="file-simulation">
+                        <strong>Current situation:</strong><br>
+                        $ ls -l nginx.conf<br>
+                        -rwxrwxrwx 1 user group 2048 nginx.conf<br>
+                        <br>
+                        <span style="color: orange;">Security audit: Config file has unnecessary execute permissions!</span>
+                    </div>
+                    
+                    <div class="try-it-box">
+                        <h5>Fix the config file permissions! ⚙️</h5>
+                        <p>Make nginx.conf readable by all, writable by owner only, and NOT executable:</p>
+                        <div class="practice-terminal">
+                            $ <input type="text" class="command-input-tutorial" id="command-5" 
+                                   placeholder="chmod ??? nginx.conf" 
+                                   onkeypress="if(event.key==='Enter') checkCommand(5)">
+                        </div>
+                        <button class="btn btn-success" onclick="checkCommand(5)">
+                            <i class="fas fa-cog"></i> Fix Config
+                        </button>
+                        <button class="btn btn-info" onclick="showHint(5)">
+                            <i class="fas fa-lightbulb"></i> Need a Hint?
+                        </button>
+                        
+                        <div id="hint-5" class="hint-panel">
+                            <i class="fas fa-lightbulb"></i> <strong>Hint:</strong> 
+                            Config files typically use <code>chmod 644</code> - owner can read/write (6 = 4+2), 
+                            group and others can read only (4).
+                        </div>
+                        
+                        <div id="success-5" class="success-feedback">
+                            <i class="fas fa-check-circle"></i> Perfect! The config file now has proper permissions. 
+                            Services can read it, but it's not executable.
+                        </div>
+                        
+                        <div id="error-5" class="error-feedback">
+                            <i class="fas fa-times-circle"></i> <span id="error-text-5"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Graduation -->
+                <div class="tutorial-step" id="step-6" style="display: none;">
+                    <div class="step-number completed">✓</div>
+                    <h3>Congratulations! 🎉</h3>
+                    <p class="lead">You've mastered the fundamentals of chmod! You now understand:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>✅ What You've Learned:</h5>
+                            <ul>
+                                <li>How file permissions work</li>
+                                <li>Octal notation (644, 755, 600)</li>
+                                <li>Security best practices</li>
+                                <li>Common DevOps scenarios</li>
+                                <li>When to use different permissions</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>🎯 Key Permission Patterns:</h5>
+                            <ul>
+                                <li><code>755</code> - Scripts and executables</li>
+                                <li><code>644</code> - Config and text files</li>
+                                <li><code>600</code> - Private keys and secrets</li>
+                                <li><code>750</code> - Group-accessible scripts</li>
+                                <li><code>700</code> - Private directories</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="try-it-box">
+                        <h3>Ready for the Real Challenge? 🚀</h3>
+                        <p>Time to test your skills with real DevOps scenarios!</p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="{{ url_for('game') }}" class="btn btn-warning btn-lg px-4">
+                                <i class="fas fa-gamepad"></i> Play ChmodHero
+                            </a>
+                            <a href="{{ url_for('help_page') }}" class="btn btn-info btn-lg px-4">
+                                <i class="fas fa-book"></i> Reference Guide
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker Sidebar -->
+        <div class="col-lg-4">
+            <div class="progress-tracker">
+                <h5 class="mb-3">
+                    <i class="fas fa-route"></i> Tutorial Progress
+                </h5>
+                
+                <div class="progress-item" id="progress-1">
+                    <div class="progress-icon current">1</div>
+                    <div>
+                        <strong>Introduction</strong><br>
+                        <small class="text-muted">Learn the basics</small>
+                    </div>
+                </div>
+                
+                <div class="progress-item" id="progress-2">
+                    <div class="progress-icon">2</div>
+                    <div>
+                        <strong>Octal Numbers</strong><br>
+                        <small class="text-muted">Understand 755, 644, etc.</small>
+                    </div>
+                </div>
+                
+                <div class="progress-item" id="progress-3">
+                    <div class="progress-icon">3</div>
+                    <div>
+                        <strong>First Command</strong><br>
+                        <small class="text-muted">Make files executable</small>
+                    </div>
+                </div>
+                
+                <div class="progress-item" id="progress-4">
+                    <div class="progress-icon">4</div>
+                    <div>
+                        <strong>Security</strong><br>
+                        <small class="text-muted">Protect SSH keys</small>
+                    </div>
+                </div>
+                
+                <div class="progress-item" id="progress-5">
+                    <div class="progress-icon">5</div>
+                    <div>
+                        <strong>Config Files</strong><br>
+                        <small class="text-muted">Proper file permissions</small>
+                    </div>
+                </div>
+                
+                <div class="progress-item" id="progress-6">
+                    <div class="progress-icon">✓</div>
+                    <div>
+                        <strong>Complete!</strong><br>
+                        <small class="text-muted">Ready to play</small>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" onclick="previousStep()" id="prev-btn" disabled>
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn btn-primary" onclick="nextStep()" id="next-btn">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 6;
+const completedSteps = new Set();
+
+function nextStep() {
+    if (currentStep < totalSteps) {
+        // Hide current step
+        document.getElementById(`step-${currentStep}`).style.display = 'none';
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        
+        // Update progress
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').classList.remove('current');
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').classList.add('completed');
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').textContent = '✓';
+        
+        completedSteps.add(currentStep);
+        currentStep++;
+        
+        // Show next step
+        document.getElementById(`step-${currentStep}`).style.display = 'block';
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').classList.add('current');
+        
+        // Update buttons
+        document.getElementById('prev-btn').disabled = false;
+        if (currentStep === totalSteps) {
+            document.getElementById('next-btn').style.display = 'none';
+        }
+        
+        // Scroll to top of step
+        document.getElementById(`step-${currentStep}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function previousStep() {
+    if (currentStep > 1) {
+        // Hide current step
+        document.getElementById(`step-${currentStep}`).style.display = 'none';
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').classList.remove('current');
+        
+        currentStep--;
+        
+        // Show previous step
+        document.getElementById(`step-${currentStep}`).style.display = 'block';
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+        
+        // Update progress
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').classList.remove('completed');
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').classList.add('current');
+        document.getElementById(`progress-${currentStep}`).querySelector('.progress-icon').textContent = currentStep;
+        
+        // Update buttons
+        document.getElementById('next-btn').style.display = 'block';
+        if (currentStep === 1) {
+            document.getElementById('prev-btn').disabled = true;
+        }
+        
+        // Scroll to top of step
+        document.getElementById(`step-${currentStep}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function checkAnswer(questionNum, isCorrect) {
+    const feedback = document.getElementById(`quiz-${questionNum}-feedback`);
+    
+    if (isCorrect) {
+        feedback.innerHTML = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> Correct! 644 means rw-r--r-- (owner: read+write, group: read, others: read)</div>';
+        setTimeout(() => {
+            nextStep();
+        }, 2000);
+    } else {
+        feedback.innerHTML = '<div class="alert alert-danger"><i class="fas fa-times-circle"></i> Not quite. Think about what each digit represents: 6=4+2, 4=4+0, 4=4+0</div>';
+    }
+}
+
+function checkCommand(stepNum) {
+    const input = document.getElementById(`command-${stepNum}`);
+    const command = input.value.trim().toLowerCase();
+    const successDiv = document.getElementById(`success-${stepNum}`);
+    const errorDiv = document.getElementById(`error-${stepNum}`);
+    const errorText = document.getElementById(`error-text-${stepNum}`);
+    
+    // Hide previous feedback
+    successDiv.style.display = 'none';
+    errorDiv.style.display = 'none';
+    
+    let isCorrect = false;
+    let errorMessage = '';
+    
+    switch(stepNum) {
+        case 3:
+            if (command.includes('chmod +x script.sh') || command.includes('chmod 755 script.sh') || command.includes('chmod a+x script.sh')) {
+                isCorrect = true;
+            } else if (!command.startsWith('chmod')) {
+                errorMessage = 'Command must start with "chmod"';
+            } else if (!command.includes('script.sh')) {
+                errorMessage = 'Don\'t forget to specify the filename: script.sh';
+            } else {
+                errorMessage = 'Try "chmod +x script.sh" or "chmod 755 script.sh"';
+            }
+            break;
+            
+        case 4:
+            if (command.includes('chmod 600') && (command.includes('id_rsa') || command.includes('~/.ssh/id_rsa'))) {
+                isCorrect = true;
+            } else if (!command.startsWith('chmod')) {
+                errorMessage = 'Command must start with "chmod"';
+            } else if (!command.includes('600')) {
+                errorMessage = 'SSH private keys need 600 permissions (owner-only read/write)';
+            } else {
+                errorMessage = 'Don\'t forget the filename. Try "chmod 600 ~/.ssh/id_rsa"';
+            }
+            break;
+            
+        case 5:
+            if (command.includes('chmod 644 nginx.conf')) {
+                isCorrect = true;
+            } else if (!command.startsWith('chmod')) {
+                errorMessage = 'Command must start with "chmod"';
+            } else if (!command.includes('644')) {
+                errorMessage = 'Config files typically use 644 permissions (owner: rw-, others: r--)';
+            } else {
+                errorMessage = 'Don\'t forget the filename. Try "chmod 644 nginx.conf"';
+            }
+            break;
+    }
+    
+    if (isCorrect) {
+        successDiv.style.display = 'block';
+        input.value = '';
+        setTimeout(() => {
+            nextStep();
+        }, 2000);
+    } else {
+        errorText.textContent = errorMessage;
+        errorDiv.style.display = 'block';
+    }
+}
+
+function showHint(stepNum) {
+    document.getElementById(`hint-${stepNum}`).style.display = 'block';
+}
+
+// Focus on input when step becomes active
+function focusCurrentInput() {
+    const input = document.querySelector(`#step-${currentStep} .command-input-tutorial`);
+    if (input) {
+        setTimeout(() => input.focus(), 100);
+    }
+}
+
+// Initialize tutorial
+document.addEventListener('DOMContentLoaded', function() {
+    focusCurrentInput();
+});
+</script>
+{% endblock %}
