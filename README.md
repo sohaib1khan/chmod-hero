@@ -7,7 +7,7 @@ ChmodHero is an interactive web-based game that teaches Linux file permissions (
 [![🎮 PLAY ONLINE](https://img.shields.io/badge/🎮-PLAY_ONLINE-4CAF50?style=for-the-badge)](https://sohaib1khan.github.io/chmod-hero/)
 [![📚 DOCUMENTATION](https://img.shields.io/badge/📚-DOCUMENTATION-2196F3?style=for-the-badge)](https://github.com/sohaib1khan/chmod-hero)
 
-## 🎯 Features
+##  Features
 
 - **Real-world scenarios**: SSH security, Docker builds, database backups, Kubernetes secrets
 - **Progressive difficulty**: Start with basic `chmod +x` and work up to complex permission scenarios
@@ -16,7 +16,7 @@ ChmodHero is an interactive web-based game that teaches Linux file permissions (
 - **Leaderboard**: Compete with other DevOps learners
 - **Cross-platform**: Runs on Windows, Linux, and macOS
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option: Run Locally
 
@@ -74,7 +74,7 @@ Current: -rw-r--r-- id_rsa
 Solution: chmod 600 id_rsa
 ```
 
-## 📚 What You'll Learn
+## What You'll Learn
 
 - **Basic chmod syntax**: Understanding octal notation (755, 644, 600)
 - **Symbolic notation**: Using +x, u+rwx, go-w syntax
@@ -82,7 +82,7 @@ Solution: chmod 600 id_rsa
 - **Real-world applications**: SSH keys, scripts, config files, secrets
 - **DevOps scenarios**: Docker builds, Kubernetes deployments, database operations
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 chmod-hero/
@@ -113,7 +113,7 @@ chmod-hero/
     └── test_permissions.py
 ```
 
-## 🛠️ Development
+## Development
 
 ### Adding New Scenarios
 
@@ -152,7 +152,7 @@ export SECRET_KEY=your-secret-key-here
 export DEBUG=false
 ```
 
-## 🌐 Deployment
+## Deployment
 
 ### Local Development
 ```bash
@@ -176,7 +176,7 @@ EXPOSE 5000
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
 ```
 
-## 📊 Game Levels
+## Game Levels
 
 | Level | Scenario | Difficulty | Concepts |
 |-------|----------|------------|----------|
@@ -188,7 +188,7 @@ CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
 | 6 | Kubernetes Secrets | Hard | 600 permissions, security audit |
 | 7 | Git Hooks | Medium | 755 permissions, development tools |
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 **Game won't start**
 - Make sure you're in the virtual environment: `source venv/bin/activate`
